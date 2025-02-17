@@ -1,0 +1,105 @@
+@font-face {
+    font-family: 'Murecho';
+    src: url('Murecho/Murecho-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Murecho';
+    src: url('Murecho/Murecho-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Murecho', sans-serif;
+    color: #d1cfc0;
+    background-color: #1f1f1f;
+}
+
+.navbar {
+    text-align: center;
+    margin: 40px 0px 20px 0px;
+}
+
+.button-container {
+    display: inline-block;
+}
+
+.custom-button {
+    position: relative;
+    border: none;
+    background: none;
+    color: #d1cfc0;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    overflow: hidden;
+}
+
+.custom-button::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 90%;
+    height: 2px;
+    background-color: #8E6E53;
+    transform: translateX(-50%) scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.custom-button:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+
+.alphabet {
+    display: flex;
+    align-items: center;
+    margin: 50px;
+}
+
+.letter-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    transition: transform 0.3s;
+}
+
+.letter-cell:hover {
+    transform: translateY(-10px);
+    cursor: pointer;
+}
+
+.letter {
+    font-size: 8rem;
+    line-height: 0.8;
+    color: #d1cfc0;
+    font-family: "Murecho";
+    font-weight: bold;
+    padding: 20px;
+    transition: text-shadow 0.3s;
+}
+
+.description {
+    font-size: 1.25rem;
+    color: #666666;
+    margin-top: 30px;
+    transition: transform 0.3s;
+}
+
+.letter-cell:hover .description {
+    transform: translateY(-10px);
+    cursor: pointer;
+}
+
+
+.divider {
+    width: 3px;
+    height: 100px;
+    background-color: #8E6E53;
+    margin: 0 20px;
+}
