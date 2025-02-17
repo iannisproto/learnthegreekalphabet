@@ -8,12 +8,16 @@
 </head>
 <body>
     <div class="navbar">
+    <span class="logo">learnthegreekalphabet</span>
         <div class="button-container">
             <button class="custom-button">Home</button>
             <button class="custom-button">About</button>
             <button class="custom-button">Contact</button>
         </div>
-    </div>
+</div>
+
+    <div class="cursor"></div>
+
     <div class="alphabet">
         <div class="letter-cell">
             <span class="letter">Αα</span>
@@ -29,8 +33,120 @@
             <span class="letter">Γγ</span>
             <div class="description">γάμμα / gamma</div>
         </div>
-        <!-- Add more letters as needed -->
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Δδ</span>
+            <div class="description">δέλτα / delta</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Εε</span>
+            <div class="description">έψιλον / epsilon</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ζζ</span>
+            <div class="description">ζήτα / zeta</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ηη</span>
+            <div class="description">ήτα / eta</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Θθ</span>
+            <div class="description">θήτα / theta</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ιι</span>
+            <div class="description">γιώτα / iota</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Κκ</span>
+            <div class="description">κάππα / kappa</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Λλ</span>
+            <div class="description">λάμβδα / lambda</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Μμ</span>
+            <div class="description">μι / mu</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Νν</span>
+            <div class="description">νι / nu</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ξξ</span>
+            <div class="description">ξι / xi</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Οο</span>
+            <div class="description">όμικρον / omicron</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ππ</span>
+            <div class="description">πι / pi</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ρρ</span>
+            <div class="description">ρώ / rho</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Σσς</span>
+            <div class="description">σίγμα / sigma</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ττ</span>
+            <div class="description">ταυ / tau</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Υυ</span>
+            <div class="description">ύψιλον / upsilon</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Φφ</span>
+            <div class="description">φί / phi</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Χχ</span>
+            <div class="description">χι / chi</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ψψ</span>
+            <div class="description">ψι / psi</div>
+        </div>
+        <div class="divider"></div>
+        <div class="letter-cell">
+            <span class="letter">Ωω</span>
+            <div class="description">ωμέγα / omega</div>
+        </div>
     </div>
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = `${e.pageX}px`;
+            cursor.style.top = `${e.pageY}px`;
+        });
+    </script>
 </body>
 </html>
-
