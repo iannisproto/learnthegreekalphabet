@@ -41,6 +41,7 @@ body::before {
 .navbar {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin: 40px 75px 20px 75px;
     position: relative;
     z-index: 2;
@@ -52,6 +53,7 @@ body::before {
     margin-left: 100px;
     user-select: none;
     color: #FE4A49;
+    z-index: 3;
 }
 
 .button-container {
@@ -78,7 +80,7 @@ body::before {
     bottom: 0;
     width: 90%;
     height: 2px;
-    background-color: #CAB6A5;
+    background-color: #FE4A49;
     transform: translateX(-50%) scaleX(0);
     transition: transform 0.3s ease;
 }
@@ -93,14 +95,14 @@ body::before {
     margin: 50px;
     flex-wrap: wrap;
     justify-content: center;
-    z-index: 2;
+    z-index: 3;
 }
 
 .letter-cell {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
+    margin: 25px;
     transition: transform 0.3s;
 }
 
@@ -116,38 +118,50 @@ body::before {
     font-family: "Murecho";
     font-weight: bold;
     padding: 20px;
-    transition: text-shadow 0.3s;
+    transition: text-shadow 0.4s ease, color 0.4s ease;
 }
 
 .description {
     font-size: 1.25rem;
     color: #707070;
     margin-top: 30px;
-    transition: color 0.3s ease, transform 0.3s;
+    transition: text-shadow 0.4s ease, color 0.4s ease, transform 0.4s ease;
+}
+
+.letter-cell:hover .letter, .letter:hover, .description:hover {
+    color: #FE4A49;
 }
 
 .letter-cell:hover .description {
-    transform: translateY(-10px);
-    cursor: pointer;
-    color: #CAB6A5;
+    transform: translateY(0px);
+    color: #FE4A49;
+    text-shadow: 0 0 10px rgba(254, 74, 73, 0.25);
 }
 
 .divider {
     width: 2px;
     height: 100px;
-    background-color: #CAB6A5;
+    background-color: gray;
     margin: 0 20px;
 }
 
-.cursor {
-    position: absolute; /* Position the cursor */
-    background-color: white; /* Cursor color */
-    border-radius: 50%; /* Make it circular */
-    pointer-events: none; /* Prevent the cursor from interfering with mouse events */
-    box-shadow: 0 0 120px 90px rgba(255, 255, 255, 0.1); /* Large but weak white shadow */
-    transform: translate(-10%, -50%); /* Center the cursor */
-    margin-top: -40px;
-    margin-left: -10px;
-    z-index: 10;
+a {
+    text-decoration: none;
 }
 
+@media (max-width: 1100px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 75px;
+    }
+
+    .button-container {
+        margin-top: 40px;
+    }
+
+    .logo {
+        margin-left: 0;
+    }
+}

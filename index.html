@@ -4,148 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Alphabet Display</title>
+    <title>Learn The Greek Alphabet</title>
 </head>
 <body>
     <div class="navbar">
-    <span class="logo">learnthegreekalphabet</span>
+        <span class="logo">learnthegreekalphabet</span>
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
         <div class="button-container">
             <button class="custom-button">Home</button>
             <button class="custom-button">About</button>
             <button class="custom-button">Contact</button>
         </div>
-</div>
-
-    <div class="cursor"></div>
-
-    <div class="alphabet">
-        <div class="letter-cell">
-            <span class="letter">Αα</span>
-            <div class="description">άλφα / alpha</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ββ</span>
-            <div class="description">βήτα / beta</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Γγ</span>
-            <div class="description">γάμμα / gamma</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Δδ</span>
-            <div class="description">δέλτα / delta</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Εε</span>
-            <div class="description">έψιλον / epsilon</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ζζ</span>
-            <div class="description">ζήτα / zeta</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ηη</span>
-            <div class="description">ήτα / eta</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Θθ</span>
-            <div class="description">θήτα / theta</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ιι</span>
-            <div class="description">γιώτα / iota</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Κκ</span>
-            <div class="description">κάππα / kappa</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Λλ</span>
-            <div class="description">λάμβδα / lambda</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Μμ</span>
-            <div class="description">μι / mu</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Νν</span>
-            <div class="description">νι / nu</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ξξ</span>
-            <div class="description">ξι / xi</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Οο</span>
-            <div class="description">όμικρον / omicron</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ππ</span>
-            <div class="description">πι / pi</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ρρ</span>
-            <div class="description">ρώ / rho</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Σσς</span>
-            <div class="description">σίγμα / sigma</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ττ</span>
-            <div class="description">ταυ / tau</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Υυ</span>
-            <div class="description">ύψιλον / upsilon</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Φφ</span>
-            <div class="description">φί / phi</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Χχ</span>
-            <div class="description">χι / chi</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ψψ</span>
-            <div class="description">ψι / psi</div>
-        </div>
-        <div class="divider"></div>
-        <div class="letter-cell">
-            <span class="letter">Ωω</span>
-            <div class="description">ωμέγα / omega</div>
-        </div>
     </div>
+    <div class="alphabet" id="alphabet"></div>
 
     <script>
-        const cursor = document.querySelector('.cursor');
+        const letters = [
+            { symbol: 'Αα', description: 'άλφα / alpha', page: 'alpha' },
+            { symbol: 'Ββ', description: 'βήτα / beta', page: 'beta' },
+            { symbol: 'Γγ', description: 'γάμμα / gamma', page: 'gamma' },
+            { symbol: 'Δδ', description: 'δέλτα / delta', page: 'delta' },
+            { symbol: 'Εε', description: 'έψιλον / epsilon', page: 'epsilon' },
+            { symbol: 'Ζζ', description: 'ζήτα / zeta', page: 'zeta' },
+            { symbol: 'Ηη', description: 'ήτα / eta', page: 'eta' },
+            { symbol: 'Θθ', description: 'θήτα / theta', page: 'theta' },
+            { symbol: 'Ιι', description: 'γιώτα / iota', page: 'iota' },
+            { symbol: 'Κκ', description: 'κάππα / kappa', page: 'kappa' },
+            { symbol: 'Λλ', description: 'λάμβδα / lambda', page: 'lambda' },
+            { symbol: 'Μμ', description: 'μι / mu', page: 'mu' },
+            { symbol: 'Νν', description: 'νι / nu', page: 'nu' },
+            { symbol: 'Ξξ', description: 'ξι / xi', page: 'xi' },
+            { symbol: 'Οο', description: 'όμικρον / omicron', page: 'omicron' },
+            { symbol: 'Ππ', description: 'πι / pi', page: 'pi' },
+            { symbol: 'Ρρ', description: 'ρώ / rho', page: 'rho' },
+            { symbol: 'Σσς', description: 'σίγμα / sigma', page: 'sigma' },
+            { symbol: 'Ττ', description: 'ταυ / tau', page: 'tau' },
+            { symbol: 'Υυ', description: 'ύψιλον / upsilon', page: 'upsilon' },
+            { symbol: 'Φφ', description: 'φί / phi', page: 'phi' },
+            { symbol: 'Χχ', description: 'χι / chi', page: 'chi' },
+            { symbol: 'Ψψ', description: 'ψι / psi', page: 'psi' },
+            { symbol: 'Ωω', description: 'ωμέγα / omega', page: 'omega' }
+        ];
 
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = `${e.pageX}px`;
-            cursor.style.top = `${e.pageY}px`;
+        const alphabetContainer = document.getElementById('alphabet');
+
+        letters.forEach(letter => {
+            const letterCell = document.createElement('div');
+            letterCell.className = 'letter-cell';
+
+            const letterLink = document.createElement('a');
+            letterLink.className = 'letter';
+            letterLink.textContent = letter.symbol;
+            letterLink.href = `${letter.page}.html`;
+
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.className = 'description';
+            descriptionDiv.textContent = letter.description;
+
+            letterCell.appendChild(letterLink);
+            letterCell.appendChild(descriptionDiv);
+            alphabetContainer.appendChild(letterCell);
         });
     </script>
 </body>
