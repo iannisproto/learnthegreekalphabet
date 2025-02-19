@@ -27,28 +27,26 @@
 <script>
 document.body.style.overflow = 'hidden';
 
-function hideLoader() {
-    const overlay = document.getElementById('overlay');
-    const loaderContainer = document.querySelector('.loader-container');
-    overlay.style.opacity = '0';
-    loaderContainer.style.opacity = '0';
+const overlay = document.getElementById('overlay');
+const loaderContainer = document.querySelector('.loader-container');
 
-    setTimeout(() => {
-        document.body.style.overflow = 'auto';
-        overlay.style.display = 'none';
-    }, 1000);
-}
-
-if (document.readyState === 'complete') {
-    // If the document is already fully loaded, skip the loader
-    hideLoader();
+if (document.referrer && document.referrer.includes('learnthegreekalphabet.online')) {
+    // If the user came from the same site, hide the loader and overlay immediately
+    overlay.style.display = 'none';
+    loaderContainer.style.display = 'none';
+    document.body.style.overflow = 'auto';
 } else {
-    // Otherwise, set up the loader to hide after 1 second
-    setTimeout(hideLoader, 1000);
-}
+    // Show loader and overlay for external navigation
+    setTimeout(() => {
+        overlay.style.opacity = '0';
+        loaderContainer.style.opacity = '0';
 
-// Add an event listener for when the DOM content is fully loaded
-document.addEventListener('DOMContentLoaded', hideLoader);
+        setTimeout(() => {
+            document.body.style.overflow = 'auto';
+            overlay.style.display = 'none';
+        }, 500);
+    }, 500);
+}
 
 const letters = [
     { symbol: 'Αα', description: 'άλφα / alpha', page: 'alpha' },
@@ -96,6 +94,6 @@ letters.forEach(letter => {
     letterCell.appendChild(descriptionDiv);
     alphabetContainer.appendChild(letterCell);
 });
-    </script>
+</script>
 </body>
 </html>
