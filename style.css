@@ -24,6 +24,10 @@ body {
     color: #d1cfc0;
     background-color: #1F1F1F;
     position: relative;
+    background-image: 
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 2px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03) 1px, transparent 2px);
+    background-size: 50px 50px;
 }
 
 body::before {
@@ -39,11 +43,11 @@ body::before {
 }
 
 .loader-container {
-    position: fixed; /* Use fixed positioning */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for element size */
-    z-index: 11; /* Ensure it's above the overlay */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 11;
 }
 
 #overlay {

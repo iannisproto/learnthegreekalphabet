@@ -24,67 +24,78 @@
 
     <div class="alphabet" id="alphabet"></div>
 
-    <script>
-    document.body.style.overflow = 'hidden';
+<script>
+document.body.style.overflow = 'hidden';
+
+function hideLoader() {
+    const overlay = document.getElementById('overlay');
+    const loaderContainer = document.querySelector('.loader-container');
+    overlay.style.opacity = '0';
+    loaderContainer.style.opacity = '0';
 
     setTimeout(() => {
-        const overlay = document.getElementById('overlay');
-        const loaderContainer = document.querySelector('.loader-container');
-        overlay.style.opacity = '0';
-        loaderContainer.style.opacity = '0';
-
-        setTimeout(() => {
-            document.body.style.overflow = 'auto';
-            overlay.style.display = 'none';
-        }, 1000);
+        document.body.style.overflow = 'auto';
+        overlay.style.display = 'none';
     }, 1000);
+}
 
-        const letters = [
-            { symbol: 'Αα', description: 'άλφα / alpha', page: 'alpha' },
-            { symbol: 'Ββ', description: 'βήτα / beta', page: 'beta' },
-            { symbol: 'Γγ', description: 'γάμμα / gamma', page: 'gamma' },
-            { symbol: 'Δδ', description: 'δέλτα / delta', page: 'delta' },
-            { symbol: 'Εε', description: 'έψιλον / epsilon', page: 'epsilon' },
-            { symbol: 'Ζζ', description: 'ζήτα / zeta', page: 'zeta' },
-            { symbol: 'Ηη', description: 'ήτα / eta', page: 'eta' },
-            { symbol: 'Θθ', description: 'θήτα / theta', page: 'theta' },
-            { symbol: 'Ιι', description: 'γιώτα / iota', page: 'iota' },
-            { symbol: 'Κκ', description: 'κάππα / kappa', page: 'kappa' },
-            { symbol: 'Λλ', description: 'λάμβδα / lambda', page: 'lambda' },
-            { symbol: 'Μμ', description: 'μι / mu', page: 'mu' },
-            { symbol: 'Νν', description: 'νι / nu', page: 'nu' },
-            { symbol: 'Ξξ', description: 'ξι / xi', page: 'xi' },
-            { symbol: 'Οο', description: 'όμικρον / omicron', page: 'omicron' },
-            { symbol: 'Ππ', description: 'πι / pi', page: 'pi' },
-            { symbol: 'Ρρ', description: 'ρώ / rho', page: 'rho' },
-            { symbol: 'Σσς', description: 'σίγμα / sigma', page: 'sigma' },
-            { symbol: 'Ττ', description: 'ταυ / tau', page: 'tau' },
-            { symbol: 'Υυ', description: 'ύψιλον / upsilon', page: 'upsilon' },
-            { symbol: 'Φφ', description: 'φί / phi', page: 'phi' },
-            { symbol: 'Χχ', description: 'χι / chi', page: 'chi' },
-            { symbol: 'Ψψ', description: 'ψι / psi', page: 'psi' },
-            { symbol: 'Ωω', description: 'ωμέγα / omega', page: 'omega' }
-        ];
+if (document.readyState === 'complete') {
+    // If the document is already fully loaded, skip the loader
+    hideLoader();
+} else {
+    // Otherwise, set up the loader to hide after 1 second
+    setTimeout(hideLoader, 1000);
+}
 
-        const alphabetContainer = document.getElementById('alphabet');
+// Add an event listener for when the DOM content is fully loaded
+document.addEventListener('DOMContentLoaded', hideLoader);
 
-        letters.forEach(letter => {
-            const letterCell = document.createElement('div');
-            letterCell.className = 'letter-cell';
+const letters = [
+    { symbol: 'Αα', description: 'άλφα / alpha', page: 'alpha' },
+    { symbol: 'Ββ', description: 'βήτα / beta', page: 'beta' },
+    { symbol: 'Γγ', description: 'γάμμα / gamma', page: 'gamma' },
+    { symbol: 'Δδ', description: 'δέλτα / delta', page: 'delta' },
+    { symbol: 'Εε', description: 'έψιλον / epsilon', page: 'epsilon' },
+    { symbol: 'Ζζ', description: 'ζήτα / zeta', page: 'zeta' },
+    { symbol: 'Ηη', description: 'ήτα / eta', page: 'eta' },
+    { symbol: 'Θθ', description: 'θήτα / theta', page: 'theta' },
+    { symbol: 'Ιι', description: 'γιώτα / iota', page: 'iota' },
+    { symbol: 'Κκ', description: 'κάππα / kappa', page: 'kappa' },
+    { symbol: 'Λλ', description: 'λάμβδα / lambda', page: 'lambda' },
+    { symbol: 'Μμ', description: 'μι / mu', page: 'mu' },
+    { symbol: 'Νν', description: 'νι / nu', page: 'nu' },
+    { symbol: 'Ξξ', description: 'ξι / xi', page: 'xi' },
+    { symbol: 'Οο', description: 'όμικρον / omicron', page: 'omicron' },
+    { symbol: 'Ππ', description: 'πι / pi', page: 'pi' },
+    { symbol: 'Ρρ', description: 'ρώ / rho', page: 'rho' },
+    { symbol: 'Σσς', description: 'σίγμα / sigma', page: 'sigma' },
+    { symbol: 'Ττ', description: 'ταυ / tau', page: 'tau' },
+    { symbol: 'Υυ', description: 'ύψιλον / upsilon', page: 'upsilon' },
+    { symbol: 'Φφ', description: 'φί / phi', page: 'phi' },
+    { symbol: 'Χχ', description: 'χι / chi', page: 'chi' },
+    { symbol: 'Ψψ', description: 'ψι / psi', page: 'psi' },
+    { symbol: 'Ωω', description: 'ωμέγα / omega', page: 'omega' }
+];
 
-            const letterLink = document.createElement('a');
-            letterLink.className = 'letter';
-            letterLink.textContent = letter.symbol;
-            letterLink.href = `${letter.page}.html`;
+const alphabetContainer = document.getElementById('alphabet');
 
-            const descriptionDiv = document.createElement('div');
-            descriptionDiv.className = 'description';
-            descriptionDiv.textContent = letter.description;
+letters.forEach(letter => {
+    const letterCell = document.createElement('div');
+    letterCell.className = 'letter-cell';
 
-            letterCell.appendChild(letterLink);
-            letterCell.appendChild(descriptionDiv);
-            alphabetContainer.appendChild(letterCell);
-        });
+    const letterLink = document.createElement('a');
+    letterLink.className = 'letter';
+    letterLink.textContent = letter.symbol;
+    letterLink.href = `${letter.page}.html`;
+
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.className = 'description';
+    descriptionDiv.textContent = letter.description;
+
+    letterCell.appendChild(letterLink);
+    letterCell.appendChild(descriptionDiv);
+    alphabetContainer.appendChild(letterCell);
+});
     </script>
 </body>
 </html>
