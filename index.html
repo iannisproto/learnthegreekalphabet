@@ -16,9 +16,29 @@
             <button class="custom-button">Contact</button>
         </div>
     </div>
+
+    <div id="overlay"></div>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+
     <div class="alphabet" id="alphabet"></div>
 
     <script>
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+        const overlay = document.getElementById('overlay');
+        const loaderContainer = document.querySelector('.loader-container');
+        overlay.style.opacity = '0';
+        loaderContainer.style.opacity = '0';
+
+        setTimeout(() => {
+            document.body.style.overflow = 'auto';
+            overlay.style.display = 'none';
+        }, 1000);
+    }, 1000);
+
         const letters = [
             { symbol: 'Αα', description: 'άλφα / alpha', page: 'alpha' },
             { symbol: 'Ββ', description: 'βήτα / beta', page: 'beta' },
