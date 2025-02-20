@@ -1,0 +1,24 @@
+.card {
+    height:17vw;
+    width: 100%;
+    background-color: #d1cfc0;;
+    display: flex;
+    margin-top: 40px;
+    color: #1F1F1F;
+    align-items: flex-end;
+}
+
+.leftter-info {
+    margin: 0;
+    padding: 0;
+}
+
+.letter {
+    font-size: 8rem;
+    margin: 0px 0px 2rem 60px;
+}
+
+.description {
+    font-size: 4rem;
+    margin: 0px 0px 2rem 60px;
+}

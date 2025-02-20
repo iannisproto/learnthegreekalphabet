@@ -1,31 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="common.css">
-    <link rel="stylesheet" href="index.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <title>Learn The Greek Alphabet</title>
-</head>
-<body>
-    <div class="navbar">
-            <a href="index.html" class="logo">learnthegreekalphabet</a>
-        <div class="center-links">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </div>
-    </div>
-
-    <div id="overlay"></div>
-    <div class="loader-container">
-        <div class="loader"></div>
-    </div>
-
-    <div id="alphabet"></div>
-
-<script>
         document.body.style.overflow = 'hidden';
 
         const overlay = document.getElementById('overlay');
@@ -96,6 +68,3 @@
             letterCell.appendChild(descriptionDiv);
             alphabetContainer.appendChild(letterCell);
         });
-</script>
-</body>
-</html>

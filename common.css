@@ -1,0 +1,109 @@
+@font-face {
+    font-family: 'Murecho';
+    src: url('murecho/Murecho-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Murecho';
+    src: url('murecho/Murecho-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Junicode';
+    src: url('junicode/Junicode-Bold.ttf') format('truetype');
+    font-weight: bold;
+}
+
+body {
+    font-family: 'Murecho', sans-serif;
+    color: #d1cfc0;
+    background-color: #1F1F1F;
+    margin: 0;
+}
+
+.logo {
+    font-family: "Junicode";
+    font-size: 1.75rem;
+    user-select: none;
+    color: #FE4A49;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.navbar {
+    position: relative;
+    width: 65%;
+    margin: 2vw auto 0;
+    padding: 0;
+    z-index: 3;
+}
+
+.navbar a {
+    display: inline-block;
+    line-height: 50px;
+    text-align: center;
+}
+
+.navbar a:hover {
+    background-color: black;
+}
+
+.center-links {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+}
+
+.center-links a {
+    margin: 0 10px;
+    padding: 0 10px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+@media (max-width: 1300px) {
+    .navbar {
+        text-align: center;
+        width: 100%;
+    }
+
+    .center-links {
+        top: 40px;
+        font-size: 20px;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+@media (max-width: 700px) {
+    .navbar {
+        flex-direction: column;
+        margin-bottom: 150px;
+    }
+
+    .center-links {
+        padding: 0px 10px;
+        width: 20%;
+        margin-top: 10px;
+    }
+
+    .center-links {
+    }
+}
+
+@media (max-width: 500px) {
+    .navbar a {
+        margin: 0;
+    }
+
+    .center-links {
+    }
+}
