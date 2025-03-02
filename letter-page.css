@@ -1,24 +1,33 @@
-.card {
-    height:17vw;
+.banner {
     width: 100%;
-    background-color: #d1cfc0;;
-    display: flex;
-    margin-top: 40px;
-    color: #1F1F1F;
-    align-items: flex-end;
+    background-color: #d1cfc0;
+    color: #1f1f1f;
+    font-size: 4em;
+    text-align: center;
 }
 
-.leftter-info {
-    margin: 0;
-    padding: 0;
+span {
+    padding-left: 0.5em;
 }
 
 .letter {
-    font-size: 8rem;
-    margin: 0px 0px 2rem 60px;
+    font-family: "Murecho";
+    font-weight: bold;
+    font-size: 3em;
+    padding: 0;
+}
+
+.pronounciation {
+    color: #525252;
 }
 
 .description {
-    font-size: 4rem;
-    margin: 0px 0px 2rem 60px;
+    margin-top: 30px;
+    padding: 1% 20%;
+}
+
+p {
+    font-size: 1.25em;
+    color: #a3a3a3;
+    line-height: 1.5;
 }

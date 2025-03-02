@@ -1,0 +1,88 @@
+/* here is memorise.css */
+body {
+    background-image:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 2px),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03) 1px, transparent 2px);
+    background-size: 40px 40px;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle,
+        rgba(0, 0, 0, 0) 60%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
+    z-index: -1;
+}
+
+.card {
+    background-color: #d1cfc0;
+    width: 35%;
+    padding: 70px 30px;
+    text-align: center;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.5s ease;
+    font-size: 25px;
+
+    /* New styles for positioning */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.button {
+    margin: 40px 0;
+    border-radius: 1rem;
+    padding: 10px 15px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease; /* Transition for background color */
+    font-size: 40px;
+    text-decoration: underline 2px darkred;
+}
+
+.button:hover {
+    background-color: #adadad;
+}
+
+.labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    color: #1f1f1f;
+}
+.label-value {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+.label-value span {
+    color: #5c5c5c;
+}
+
+.characterbox {
+    display: none;
+    width: 50%;
+    height: 20vw;
+    margin: 40px auto;
+    border: 2px solid gray;
+    justify-content: center;
+    align-items: center;
+    font-family: "Murecho";
+    font-weight: bold;
+    font-size: 10vw;
+    color: #d1cfc0;
+    border-radius: 1.5rem;
+    z-index: 5;
+}

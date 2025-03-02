@@ -1,25 +1,26 @@
 @font-face {
-    font-family: 'Murecho';
-    src: url('murecho/Murecho-Regular.ttf') format('truetype');
+    font-family: "Murecho";
+    src: url("murecho/Murecho-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Murecho';
-    src: url('murecho/Murecho-Bold.ttf') format('truetype');
+    font-family: "Murecho";
+    src: url("murecho/Murecho-Bold.ttf") format("truetype");
     font-weight: bold;
 }
 
 @font-face {
-    font-family: 'Junicode';
-    src: url('junicode/Junicode-Bold.ttf') format('truetype');
+    font-family: "Junicode";
+    src: url("junicode/Junicode-Bold.ttf") format("truetype");
     font-weight: bold;
 }
 
 body {
-    font-family: 'Murecho', sans-serif;
-    background-color: #1F1F1F;
+    font-family: "Murecho", sans-serif;
+    font-weight: normal;
+    background-color: #1f1f1f;
     color: #d1cfc0;
 }
 
@@ -28,16 +29,16 @@ body {
     margin-right: 65vw;
     font-family: "Junicode";
     user-select: none;
-    color: #FE4A49;
+    color: #fe4a49;
     cursor: pointer;
-	font-size: 1.6rem;
+    font-size: 1.6rem;
 }
 
 .navbar {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 30px 60px 30px;
 }
 
 a {
@@ -56,14 +57,16 @@ a {
 }
 
 .center-links a::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 50%;
     bottom: 0;
     width: 0;
     height: 2.5px; /* Thickness of the underline */
-    background-color: #FE4A49; /* Color of the underline */
-    transition: width 0.4s ease, left 0.4s ease; /* Transition for the effect */
+    background-color: #fe4a49; /* Color of the underline */
+    transition:
+        width 0.4s ease,
+        left 0.4s ease; /* Transition for the effect */
 }
 
 .center-links a:hover::after {
@@ -72,13 +75,13 @@ a {
 }
 
 @media (max-width: 900px) {
-	.logo {
-		font-size: 2rem;
-		position: relative;
-		margin: 0 0 15px 0;
-	}
+    .logo {
+        font-size: 2rem;
+        position: relative;
+        margin: 0 0 15px 0;
+    }
 
-	.navbar {
-		flex-wrap: wrap;
-	}
+    .navbar {
+        flex-wrap: wrap;
+    }
 }
