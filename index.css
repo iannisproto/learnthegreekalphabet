@@ -1,18 +1,22 @@
 body {
-    background-image: 
+    background-image:
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 2px),
         linear-gradient(180deg, rgba(255, 255, 255, 0.03) 1px, transparent 2px);
     background-size: 40px 40px;
 }
 
 body::before {
-    content: '';
+    content: "";
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.7) 100%);
+    background: radial-gradient(
+        circle,
+        rgba(0, 0, 0, 0) 60%,
+        rgba(0, 0, 0, 0.7) 100%
+    );
     z-index: -1;
 }
 
@@ -29,7 +33,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #1F1F1F;
+    background-color: #1f1f1f;
     transition: opacity 0.7s ease;
 }
 
@@ -37,7 +41,7 @@ body::before {
     width: 120px;
     height: 22px;
     border-radius: 20px;
-    color: #FE4A49;
+    color: #fe4a49;
     border: 2px solid;
     position: absolute;
     left: -65px;
@@ -55,7 +59,9 @@ body::before {
 }
 
 @keyframes l6 {
-    100% { inset: 0; }
+    100% {
+        inset: 0;
+    }
 }
 
 #alphabet {
@@ -87,22 +93,27 @@ body::before {
     font-family: "Murecho";
     font-weight: bold;
     padding: 20px;
-    transition: text-shadow 0.4s ease, color 0.4s ease;
+    transition:
+        text-shadow 0.4s ease,
+        color 0.4s ease;
 }
 
 .description {
     font-size: 1.25rem;
     color: #707070;
     margin-top: 25px;
-    transition: text-shadow 0.4s ease, color 0.4s ease, transform 0.4s ease;
+    transition:
+        text-shadow 0.4s ease,
+        color 0.4s ease,
+        transform 0.4s ease;
 }
 
 .letter-cell:hover .letter,
 .letter:hover,
 .description:hover,
 .letter-cell:hover .description {
-    color: #FE4A49;
-    text-shadow: 0 0 10px rgba(254, 74, 73, .3);
+    color: #fe4a49;
+    text-shadow: 0 0 10px rgba(254, 74, 73, 0.3);
 }
 
 .letter-cell:hover .description {
@@ -112,6 +123,6 @@ body::before {
 .divider {
     width: 2px;
     height: 100px;
-    background-color: #FE4A49;
+    background-color: #fe4a49;
     margin: 0 20px;
 }

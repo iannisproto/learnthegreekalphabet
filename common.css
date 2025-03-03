@@ -1,13 +1,13 @@
 @font-face {
     font-family: "Murecho";
-    src: url("murecho/Murecho-Regular.ttf") format("truetype");
+    src: url("murecho/static/Murecho-Regular.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Murecho";
-    src: url("murecho/Murecho-Bold.ttf") format("truetype");
+    src: url("murecho/static/Murecho-Bold.ttf") format("truetype");
     font-weight: bold;
 }
 
@@ -29,7 +29,7 @@ body {
     margin-right: 65vw;
     font-family: "Junicode";
     user-select: none;
-    color: #fe4a49;
+    color: darkred;
     cursor: pointer;
     font-size: 1.6rem;
 }
@@ -78,7 +78,7 @@ a {
     .logo {
         font-size: 2rem;
         position: relative;
-        margin: 0 0 15px 0;
+        margin: 0;
     }
 
     .navbar {

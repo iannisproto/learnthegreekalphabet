@@ -7,58 +7,23 @@
         <link rel="stylesheet" href="memorise.css" />
         <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <title>Learn The Greek Alphabet</title>
-        <style>
-            /* A simple scoreboard that sticks at the top right */
-            #scoreboard {
-                position: fixed;
-                top: 10px;
-                right: 10px;
-                background: #fff;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                font-family: sans-serif;
-                font-size: 14px;
-            }
-            /* Style for three-option buttons */
-            .option-btn {
-                width: 30%;
-                padding: 10px;
-                font-size: 3vw;
-                cursor: pointer;
-            }
-            /* Container for options in three-box scenario */
-            #challenge-container {
-                margin-top: 20px;
-                display: flex;
-                justify-content: space-evenly;
-                align-items: center;
-            }
-            /* Style for the single textfield scenario */
-            #challenge-input {
-                width: 100%;
-                padding: 10px;
-                font-size: 2vw;
-            }
-        </style>
     </head>
     <body>
         <div class="navbar">
             <a
-                href="index.html"
+                href="https://www.learnthegreekalphabet.online"
                 class="logo animate__tada"
                 style="color: #fe4a49"
             >
                 learnthegreekalphabet
             </a>
             <div class="center-links">
-                <a href="index.html">Alphabet</a>
+                <a href="https://www.learnthegreekalphabet.online">Alphabet</a>
                 <a href="memorise.html">Memorise</a>
                 <a href="sources.html">Sources</a>
             </div>
         </div>
 
-        <!-- Scoreboard always visible -->
         <div id="scoreboard">
             <div>Correct: <span id="correctCount">0</span></div>
             <div>Wrong: <span id="wrongCount">0</span></div>
@@ -90,17 +55,14 @@
         </div>
 
         <div class="characterbox" id="character-box"></div>
-
-        <!-- The challenge container (will be inserted here) -->
         <div id="challenge-area"></div>
 
         <script>
-            // Global variables for score tracking
             let correctCount = 0;
             let wrongCount = 0;
             const maxWrong = 3;
+            let startTime = 0;
 
-            // Greek letters array and mapping to names
             const greekLetters = [
                 "Αα",
                 "Ββ",
@@ -127,184 +89,184 @@
                 "Ψψ",
                 "Ωω",
             ];
-            const greekLetterNames = {
-                Αα: "Alpha",
-                Ββ: "Beta",
-                Γγ: "Gamma",
-                Δδ: "Delta",
-                Εε: "Epsilon",
-                Ζζ: "Zeta",
-                Ηη: "Eta",
-                Θθ: "Theta",
-                Ιι: "Iota",
-                Κκ: "Kappa",
-                Λλ: "Lambda",
-                Μμ: "Mu",
-                Νν: "Nu",
-                Ξξ: "Xi",
-                Οο: "Omicron",
-                Ππ: "Pi",
-                Ρρ: "Rho",
-                Σσς: "Sigma",
-                Ττ: "Tau",
-                Υυ: "Upsilon",
-                Φφ: "Phi",
-                Χχ: "Chi",
-                Ψψ: "Psi",
-                Ωω: "Omega",
-            };
-            function getGreekLetterName(letter) {
-                return greekLetterNames[letter] || "";
-            }
-            // Returns a random Greek letter from our array.
-            function getRandomGreekLetter() {
-                const randomIndex = Math.floor(
-                    Math.random() * greekLetters.length,
-                );
-                return greekLetters[randomIndex];
-            }
 
-            // Called when Begin is clicked.
             function fadeCard() {
                 const card = document.getElementById("card");
-                const button = document.getElementById("beginButton");
-                const characterBox = document.getElementById("character-box");
-
-                card.style.opacity = "0"; // fade out card
-                button.style.cursor = "default";
-                button.onmouseover = null;
-                card.style.display = "none";
-
+                card.style.opacity = "0";
                 setTimeout(() => {
-                    card.style.position = "absolute";
-                    button.style.display = "none";
-                    // Show characterbox and set a random Greek letter
-                    characterBox.style.display = "flex";
-                    const mainLetter = getRandomGreekLetter();
-                    characterBox.textContent = mainLetter;
-                    // Kick off the challenge
-                    generateChallenge();
+                    card.style.display = "none";
+                    document.getElementById("character-box").style.display =
+                        "flex";
+                    startChallenge();
                 }, 500);
             }
 
-            // Generates the challenge boxes or textfield based on random chance.
+            function startChallenge() {
+                startTime = Date.now();
+                generateChallenge();
+            }
+
             function generateChallenge() {
-                // Remove any existing challenge container.
+                // Remove previous challenge if it exists
                 let oldContainer = document.getElementById(
                     "challenge-container",
                 );
                 if (oldContainer) oldContainer.remove();
 
-                // Create a new container for the challenge.
+                const characterBox = document.getElementById("character-box");
+                const challengeArea = document.getElementById("challenge-area");
+                challengeArea.innerHTML = "";
+                challengeArea.style.display = "block"; // Ensure it's visible
+
+                // Pick a random Greek letter
+                const randomIndex = Math.floor(
+                    Math.random() * greekLetters.length,
+                );
+                const currentLetter = greekLetters[randomIndex];
+                characterBox.textContent = currentLetter;
+
+                // Create a container for the challenge (multiple choice or input)
                 const container = document.createElement("div");
                 container.id = "challenge-container";
-                container.style.width = "80%";
-                container.style.margin = "20px auto";
+                challengeArea.appendChild(container);
 
-                // Get the main Greek letter from the character box.
-                const characterBox = document.getElementById("character-box");
-                const mainLetter = characterBox.textContent;
-                // Find its index in the array so we can compute the next letter.
-                const mainIndex = greekLetters.indexOf(mainLetter);
-                const correctLetter =
-                    greekLetters[(mainIndex + 1) % greekLetters.length];
-
-                // 66% chance to show three boxes, 33% chance to show one textfield.
+                // 66% chance for a multiple choice challenge
                 if (Math.random() < 0.66) {
-                    // THREE-BOX CHALLENGE
-                    container.style.display = "flex";
-                    container.style.justifyContent = "space-evenly";
-
-                    // Build options: one correct and two random.
-                    let options = [correctLetter];
-                    options.push(
-                        greekLetters[
-                            Math.floor(Math.random() * greekLetters.length)
-                        ],
-                    );
-                    options.push(
-                        greekLetters[
-                            Math.floor(Math.random() * greekLetters.length)
-                        ],
-                    );
-                    // Shuffle the options array.
+                    const nextLetter =
+                        greekLetters[randomIndex + 1] || greekLetters[0];
+                    let options = [nextLetter];
+                    while (options.length < 3) {
+                        let randomLetter =
+                            greekLetters[
+                                Math.floor(Math.random() * greekLetters.length)
+                            ];
+                        if (!options.includes(randomLetter)) {
+                            options.push(randomLetter);
+                        }
+                    }
                     options.sort(() => Math.random() - 0.5);
-
-                    // Create a button for each option.
-                    options.forEach((letter) => {
-                        const btn = document.createElement("button");
-                        btn.textContent = letter;
-                        btn.className = "option-btn";
-                        btn.addEventListener("click", () => {
-                            if (letter === correctLetter) {
-                                correctCount++;
-                                updateScore();
-                                regenerate();
-                            } else {
-                                wrongCount++;
-                                updateScore();
-                                if (wrongCount >= maxWrong) {
-                                    location.reload();
-                                } else {
-                                    regenerate();
-                                }
-                            }
-                        });
-                        container.appendChild(btn);
+                    options.forEach((option) => {
+                        let button = document.createElement("button");
+                        button.classList.add("option-btn");
+                        button.textContent = option;
+                        button.onclick = (e) =>
+                            checkAnswer(option, nextLetter, e);
+                        container.appendChild(button);
                     });
                 } else {
-                    // SINGLE TEXTFIELD CHALLENGE
-                    container.style.display = "block";
-                    const input = document.createElement("input");
-                    input.type = "text";
+                    let input = document.createElement("input");
                     input.id = "challenge-input";
-                    input.placeholder = "Type the letter name";
-                    input.addEventListener("keypress", function (e) {
+                    input.type = "text";
+                    input.placeholder = "Type the name of the letter...";
+                    input.onkeypress = (e) => {
                         if (e.key === "Enter") {
-                            const answer = input.value.trim().toLowerCase();
-                            const expected =
-                                getGreekLetterName(mainLetter).toLowerCase();
-                            if (answer === expected) {
-                                correctCount++;
-                                updateScore();
-                                regenerate();
-                            } else {
-                                wrongCount++;
-                                updateScore();
-                                if (wrongCount >= maxWrong) {
-                                    location.reload();
-                                } else {
-                                    regenerate();
-                                }
-                            }
+                            checkAnswer(input.value.trim(), currentLetter);
                         }
-                    });
+                    };
                     container.appendChild(input);
-                    // Auto-focus so the user can type ASAP.
-                    setTimeout(() => input.focus(), 100);
+                }
+            }
+
+            function checkAnswer(selected, correct, event = null) {
+                const element = event
+                    ? event.target
+                    : document.getElementById("challenge-input");
+
+                if (selected === correct) {
+                    correctCount++;
+                    document.getElementById("correctCount").textContent =
+                        correctCount;
+                    element.classList.add("correct-flash");
+                    setTimeout(() => {
+                        element.classList.remove("correct-flash");
+                        generateChallenge();
+                    }, 500);
+                } else {
+                    wrongCount++;
+                    document.getElementById("wrongCount").textContent =
+                        wrongCount;
+                    element.classList.add("wrong-flash", "shake");
+                    setTimeout(() => {
+                        element.classList.remove("wrong-flash", "shake");
+                        if (element.tagName === "INPUT") {
+                            element.value = "";
+                        }
+                        if (wrongCount >= maxWrong) {
+                            gameOver();
+                        }
+                    }, 500);
+                }
+            }
+
+            // Cookie helper functions to set and get high score
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie =
+                    name + "=" + (value || "") + expires + "; path=/";
+            }
+
+            function getCookie(name) {
+                let nameEQ = name + "=";
+                let ca = document.cookie.split(";");
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === " ") c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0)
+                        return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            // On game over, hide game UI and show the initial card with updated stats
+            function gameOver() {
+                const endTime = Date.now();
+                const totalTimeSeconds = Math.floor(
+                    (endTime - startTime) / 1000,
+                );
+                const totalAttempts = correctCount + wrongCount;
+                const successRate =
+                    totalAttempts > 0
+                        ? Math.round((correctCount / totalAttempts) * 100)
+                        : 0;
+
+                // Update and save high score using cookies
+                let storedHighScore = parseInt(getCookie("highScore") || "0");
+                if (correctCount > storedHighScore) {
+                    storedHighScore = correctCount;
+                    setCookie("highScore", storedHighScore, 365);
                 }
 
-                // Append the challenge container below the character box.
-                document
-                    .getElementById("challenge-area")
-                    .appendChild(container);
-            }
+                // Remove the character box and challenge area
+                document.getElementById("character-box").style.display = "none";
+                document.getElementById("challenge-area").style.display =
+                    "none";
 
-            // Wait 500ms then update the main letter and challenge.
-            function regenerate() {
-                setTimeout(() => {
-                    const newLetter = getRandomGreekLetter();
-                    document.getElementById("character-box").textContent =
-                        newLetter;
-                    generateChallenge();
-                }, 500);
-            }
-
-            // Update the scoreboard display.
-            function updateScore() {
-                document.getElementById("correctCount").textContent =
-                    correctCount;
-                document.getElementById("wrongCount").textContent = wrongCount;
+                // Reset the card to look like the starting card but with updated stats
+                const card = document.getElementById("card");
+                card.style.display = "block";
+                card.style.opacity = "1";
+                card.innerHTML = `
+              <button class="button" id="beginButton" onclick="location.reload()" aria-label="Begin learning">Try Again</button>
+              <div class="labels">
+                <div class="label-value">
+                  <label>High Score</label>
+                  <span>${storedHighScore}</span>
+                </div>
+                <div class="label-value">
+                  <label>Success Rate</label>
+                  <span>${successRate}%</span>
+                </div>
+                <div class="label-value">
+                  <label>Time</label>
+                  <span>${totalTimeSeconds}s</span>
+                </div>
+              </div>
+            `;
             }
         </script>
     </body>
