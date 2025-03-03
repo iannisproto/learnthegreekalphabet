@@ -1,310 +1,103 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="common.css" />
-        <link rel="stylesheet" href="memorise.css" />
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <title>Learn The Greek Alphabet</title>
-        <style>
-            /* A simple scoreboard that sticks at the top right */
-            #scoreboard {
-                position: fixed;
-                top: 10px;
-                right: 10px;
-                background: #fff;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 8px;
-                font-family: sans-serif;
-                font-size: 14px;
-            }
-            /* Style for three-option buttons */
-            .option-btn {
-                width: 30%;
-                padding: 10px;
-                font-size: 3vw;
-                cursor: pointer;
-            }
-            /* Container for options in three-box scenario */
-            #challenge-container {
-                margin-top: 20px;
-                display: flex;
-                justify-content: space-evenly;
-                align-items: center;
-            }
-            /* Style for the single textfield scenario */
-            #challenge-input {
-                width: 100%;
-                padding: 10px;
-                font-size: 2vw;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="navbar">
-            <a
-                href="index.html"
-                class="logo animate__tada"
-                style="color: #fe4a49"
-            >
-                learnthegreekalphabet
-            </a>
-            <div class="center-links">
-                <a href="index.html">Alphabet</a>
-                <a href="memorise.html">Memorise</a>
-                <a href="sources.html">Sources</a>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Learn The Greek Alphabet</title>
+</head>
+<body>
+    <div class="navbar">
+            <a href="https://www.learnthegreekalphabet.online" class="logo" style="color: #FE4A49;">learnthegreekalphabet</a>
+        <div class="center-links">
+            <a href="https://www.learnthegreekalphabet.online">Alphabet</a>
+            <a href="memorise.html">Memorise</a>
+            <a href="sources.html">Sources</a>
         </div>
+    </div>
 
-        <!-- Scoreboard always visible -->
-        <div id="scoreboard">
-            <div>Correct: <span id="correctCount">0</span></div>
-            <div>Wrong: <span id="wrongCount">0</span></div>
-        </div>
+    <div id="overlay"></div>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+    
 
-        <div class="card" id="card">
-            <button
-                class="button"
-                id="beginButton"
-                onclick="fadeCard()"
-                aria-label="Begin learning"
-            >
-                Begin
-            </button>
-            <div class="labels">
-                <div class="label-value">
-                    <label>High Score</label>
-                    <span>0</span>
-                </div>
-                <div class="label-value">
-                    <label>Success Rate</label>
-                    <span>0</span>
-                </div>
-                <div class="label-value">
-                    <label>Time</label>
-                    <span>0s</span>
-                </div>
-            </div>
-        </div>
+    <div id="alphabet"></div>
 
-        <div class="characterbox" id="character-box"></div>
+<script>
+        document.body.style.overflow = 'hidden';
 
-        <!-- The challenge container (will be inserted here) -->
-        <div id="challenge-area"></div>
+        const overlay = document.getElementById('overlay');
+        const loaderContainer = document.querySelector('.loader-container');
 
-        <script>
-            // Global variables for score tracking
-            let correctCount = 0;
-            let wrongCount = 0;
-            const maxWrong = 3;
-
-            // Greek letters array and mapping to names
-            const greekLetters = [
-                "Αα",
-                "Ββ",
-                "Γγ",
-                "Δδ",
-                "Εε",
-                "Ζζ",
-                "Ηη",
-                "Θθ",
-                "Ιι",
-                "Κκ",
-                "Λλ",
-                "Μμ",
-                "Νν",
-                "Ξξ",
-                "Οο",
-                "Ππ",
-                "Ρρ",
-                "Σσς",
-                "Ττ",
-                "Υυ",
-                "Φφ",
-                "Χχ",
-                "Ψψ",
-                "Ωω",
-            ];
-            const greekLetterNames = {
-                Αα: "Alpha",
-                Ββ: "Beta",
-                Γγ: "Gamma",
-                Δδ: "Delta",
-                Εε: "Epsilon",
-                Ζζ: "Zeta",
-                Ηη: "Eta",
-                Θθ: "Theta",
-                Ιι: "Iota",
-                Κκ: "Kappa",
-                Λλ: "Lambda",
-                Μμ: "Mu",
-                Νν: "Nu",
-                Ξξ: "Xi",
-                Οο: "Omicron",
-                Ππ: "Pi",
-                Ρρ: "Rho",
-                Σσς: "Sigma",
-                Ττ: "Tau",
-                Υυ: "Upsilon",
-                Φφ: "Phi",
-                Χχ: "Chi",
-                Ψψ: "Psi",
-                Ωω: "Omega",
-            };
-            function getGreekLetterName(letter) {
-                return greekLetterNames[letter] || "";
-            }
-            // Returns a random Greek letter from our array.
-            function getRandomGreekLetter() {
-                const randomIndex = Math.floor(
-                    Math.random() * greekLetters.length,
-                );
-                return greekLetters[randomIndex];
-            }
-
-            // Called when Begin is clicked.
-            function fadeCard() {
-                const card = document.getElementById("card");
-                const button = document.getElementById("beginButton");
-                const characterBox = document.getElementById("character-box");
-
-                card.style.opacity = "0"; // fade out card
-                button.style.cursor = "default";
-                button.onmouseover = null;
+        if (!sessionStorage.getItem('pageLoaded')) {
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                loaderContainer.style.opacity = '0';
 
                 setTimeout(() => {
-                    card.style.position = "absolute";
-                    button.style.display = "none";
-                    // Show characterbox and set a random Greek letter
-                    characterBox.style.display = "flex";
-                    const mainLetter = getRandomGreekLetter();
-                    characterBox.textContent = mainLetter;
-                    // Kick off the challenge
-                    generateChallenge();
-                }, 500);
-            }
+                    document.body.style.overflow = 'auto';
+                    overlay.style.display = 'none';
+                    loaderContainer.style.display = 'none';
+                }, 700);
+            }, 700);
+        } else {
+            overlay.style.display = 'none';
+            loaderContainer.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
 
-            // Generates the challenge boxes or textfield based on random chance.
-            function generateChallenge() {
-                // Remove any existing challenge container.
-                let oldContainer = document.getElementById(
-                    "challenge-container",
-                );
-                if (oldContainer) oldContainer.remove();
+        sessionStorage.setItem('pageLoaded', 'true');
 
-                // Create a new container for the challenge.
-                const container = document.createElement("div");
-                container.id = "challenge-container";
-                container.style.width = "80%";
-                container.style.margin = "20px auto";
+        const letters = [
+            { symbol: 'Αα', description: 'άλφα / alpha', page: 'alpha' },
+            { symbol: 'Ββ', description: 'βήτα / beta', page: 'beta' },
+            { symbol: 'Γγ', description: 'γάμμα / gamma', page: 'gamma' },
+            { symbol: 'Δδ', description: 'δέλτα / delta', page: 'delta' },
+            { symbol: 'Εε', description: 'έψιλον / epsilon', page: 'epsilon' },
+            { symbol: 'Ζζ', description: 'ζήτα / zeta', page: 'zeta' },
+            { symbol: 'Ηη', description: 'ήτα / eta', page: 'eta' },
+            { symbol: 'Θθ', description: 'θήτα / theta', page: 'theta' },
+            { symbol: 'Ιι', description: 'γιώτα / iota', page: 'iota' },
+            { symbol: 'Κκ', description: 'κάππα / kappa', page: 'kappa' },
+            { symbol: 'Λλ', description: 'λάμβδα / lambda', page: 'lambda' },
+            { symbol: 'Μμ', description: 'μι / mu', page: 'mu' },
+            { symbol: 'Νν', description: 'νι / nu', page: 'nu' },
+            { symbol: 'Ξξ', description: 'ξι / xi', page: 'xi' },
+            { symbol: 'Οο', description: 'όμικρον / omicron', page: 'omicron' },
+            { symbol: 'Ππ', description: 'πι / pi', page: 'pi' },
+            { symbol: 'Ρρ', description: 'ρώ / rho', page: 'rho' },
+            { symbol: 'Σσς', description: 'σίγμα / sigma', page: 'sigma' },
+            { symbol: 'Ττ', description: 'ταυ / tau', page: 'tau' },
+            { symbol: 'Υυ', description: 'ύψιλον / upsilon', page: 'upsilon' },
+            { symbol: 'Φφ', description: 'φί / phi', page: 'phi' },
+            { symbol: 'Χχ', description: 'χι / chi', page: 'chi' },
+            { symbol: 'Ψψ', description: 'ψι / psi', page: 'psi' },
+            { symbol: 'Ωω', description: 'ωμέγα / omega', page: 'omega' }
+        ];
 
-                // Get the main Greek letter from the character box.
-                const characterBox = document.getElementById("character-box");
-                const mainLetter = characterBox.textContent;
-                // Find its index in the array so we can compute the next letter.
-                const mainIndex = greekLetters.indexOf(mainLetter);
-                const correctLetter =
-                    greekLetters[(mainIndex + 1) % greekLetters.length];
+        const alphabetContainer = document.getElementById('alphabet');
 
-                // 66% chance to show three boxes, 33% chance to show one textfield.
-                if (Math.random() < 0.66) {
-                    // THREE-BOX CHALLENGE
-                    container.style.display = "flex";
-                    container.style.justifyContent = "space-evenly";
+        letters.forEach(letter => {
+            const letterCell = document.createElement('div');
+            letterCell.className = 'letter-cell';
 
-                    // Build options: one correct and two random.
-                    let options = [correctLetter];
-                    options.push(
-                        greekLetters[
-                            Math.floor(Math.random() * greekLetters.length)
-                        ],
-                    );
-                    options.push(
-                        greekLetters[
-                            Math.floor(Math.random() * greekLetters.length)
-                        ],
-                    );
-                    // Shuffle the options array.
-                    options.sort(() => Math.random() - 0.5);
+            const letterLink = document.createElement('a');
+            letterLink.className = 'letter';
+            letterLink.textContent = letter.symbol;
+            letterLink.href = `${letter.page}.html`;
 
-                    // Create a button for each option.
-                    options.forEach((letter) => {
-                        const btn = document.createElement("button");
-                        btn.textContent = letter;
-                        btn.className = "option-btn";
-                        btn.addEventListener("click", () => {
-                            if (letter === correctLetter) {
-                                correctCount++;
-                                updateScore();
-                                regenerate();
-                            } else {
-                                wrongCount++;
-                                updateScore();
-                                if (wrongCount >= maxWrong) {
-                                    location.reload();
-                                } else {
-                                    regenerate();
-                                }
-                            }
-                        });
-                        container.appendChild(btn);
-                    });
-                } else {
-                    // SINGLE TEXTFIELD CHALLENGE
-                    container.style.display = "block";
-                    const input = document.createElement("input");
-                    input.type = "text";
-                    input.id = "challenge-input";
-                    input.placeholder = "Type the letter name";
-                    input.addEventListener("keypress", function (e) {
-                        if (e.key === "Enter") {
-                            const answer = input.value.trim().toLowerCase();
-                            const expected =
-                                getGreekLetterName(mainLetter).toLowerCase();
-                            if (answer === expected) {
-                                correctCount++;
-                                updateScore();
-                                regenerate();
-                            } else {
-                                wrongCount++;
-                                updateScore();
-                                if (wrongCount >= maxWrong) {
-                                    location.reload();
-                                } else {
-                                    regenerate();
-                                }
-                            }
-                        }
-                    });
-                    container.appendChild(input);
-                    // Auto-focus so the user can type ASAP.
-                    setTimeout(() => input.focus(), 100);
-                }
+            const descriptionDiv = document.createElement('div');
+            descriptionDiv.className = 'description';
+            descriptionDiv.textContent = letter.description;
 
-                // Append the challenge container below the character box.
-                document
-                    .getElementById("challenge-area")
-                    .appendChild(container);
-            }
-
-            // Wait 500ms then update the main letter and challenge.
-            function regenerate() {
-                setTimeout(() => {
-                    const newLetter = getRandomGreekLetter();
-                    document.getElementById("character-box").textContent =
-                        newLetter;
-                    generateChallenge();
-                }, 500);
-            }
-
-            // Update the scoreboard display.
-            function updateScore() {
-                document.getElementById("correctCount").textContent =
-                    correctCount;
-                document.getElementById("wrongCount").textContent = wrongCount;
-            }
-        </script>
-    </body>
+            letterCell.appendChild(letterLink);
+            letterCell.appendChild(descriptionDiv);
+            alphabetContainer.appendChild(letterCell);
+        });
+</script>
+</body>
 </html>
+
