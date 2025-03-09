@@ -29,6 +29,7 @@
             <div>Wrong: <span id="wrongCount">0</span></div>
         </div>
 
+        <!-- The card's innerHTML will be updated based on stored final stats -->
         <div class="card" id="card">
             <button
                 class="button"
@@ -58,6 +59,34 @@
         <div id="challenge-area"></div>
 
         <script>
+            // On page load, check for stored final stats and update the card accordingly.
+            window.onload = function () {
+                const storedStats = localStorage.getItem("finalStats");
+                if (storedStats) {
+                    const stats = JSON.parse(storedStats);
+                    const card = document.getElementById("card");
+                    card.style.display = "block";
+                    card.style.opacity = "1";
+                    card.innerHTML = `
+            <button class="button" id="beginButton" onclick="restartGame()" aria-label="Try Again">Try Again</button>
+            <div class="labels">
+              <div class="label-value">
+                <label>High Score</label>
+                <span>${stats.highScore}</span>
+              </div>
+              <div class="label-value">
+                <label>Success Rate</label>
+                <span>${stats.successRate}%</span>
+              </div>
+              <div class="label-value">
+                <label>Time</label>
+                <span>${stats.time}s</span>
+              </div>
+            </div>
+          `;
+                }
+            };
+
             let correctCount = 0;
             let wrongCount = 0;
             const maxWrong = 3;
@@ -90,6 +119,34 @@
                 "Ωω",
             ];
 
+            // Mapping Greek letter characters to their English names (in lowercase)
+            const greekNames = {
+                Αα: "alpha",
+                Ββ: "beta",
+                Γγ: "gamma",
+                Δδ: "delta",
+                Εε: "epsilon",
+                Ζζ: "zeta",
+                Ηη: "eta",
+                Θθ: "theta",
+                Ιι: "iota",
+                Κκ: "kappa",
+                Λλ: "lambda",
+                Μμ: "mu",
+                Νν: "nu",
+                Ξξ: "xi",
+                Οο: "omicron",
+                Ππ: "pi",
+                Ρρ: "rho",
+                Σσς: "sigma",
+                Ττ: "tau",
+                Υυ: "upsilon",
+                Φφ: "phi",
+                Χχ: "chi",
+                Ψψ: "psi",
+                Ωω: "omega",
+            };
+
             function fadeCard() {
                 const card = document.getElementById("card");
                 card.style.opacity = "0";
@@ -108,7 +165,7 @@
 
             function generateChallenge() {
                 // Remove previous challenge if it exists
-                let oldContainer = document.getElementById(
+                const oldContainer = document.getElementById(
                     "challenge-container",
                 );
                 if (oldContainer) oldContainer.remove();
@@ -118,49 +175,60 @@
                 challengeArea.innerHTML = "";
                 challengeArea.style.display = "block"; // Ensure it's visible
 
-                // Pick a random Greek letter
+                // Pick a random Greek letter and display it as the current letter
                 const randomIndex = Math.floor(
                     Math.random() * greekLetters.length,
                 );
                 const currentLetter = greekLetters[randomIndex];
                 characterBox.textContent = currentLetter;
 
-                // Create a container for the challenge (multiple choice or input)
+                // Determine the challenge type: multiple choice or text input
+                const isMultipleChoice = Math.random() < 0.66;
                 const container = document.createElement("div");
                 container.id = "challenge-container";
                 challengeArea.appendChild(container);
 
-                // 66% chance for a multiple choice challenge
-                if (Math.random() < 0.66) {
-                    const nextLetter =
-                        greekLetters[randomIndex + 1] || greekLetters[0];
-                    let options = [nextLetter];
+                if (isMultipleChoice) {
+                    // Multiple choice challenge:
+                    // The goal is to choose the letter that comes next in the alphabet.
+                    const nextIndex = (randomIndex + 1) % greekLetters.length;
+                    const correctLetter = greekLetters[nextIndex];
+
+                    // Build options in Greek letter form.
+                    let options = [correctLetter];
                     while (options.length < 3) {
-                        let randomLetter =
+                        const randomOption =
                             greekLetters[
                                 Math.floor(Math.random() * greekLetters.length)
                             ];
-                        if (!options.includes(randomLetter)) {
-                            options.push(randomLetter);
+                        if (!options.includes(randomOption)) {
+                            options.push(randomOption);
                         }
                     }
+                    // Shuffle the options
                     options.sort(() => Math.random() - 0.5);
                     options.forEach((option) => {
-                        let button = document.createElement("button");
+                        const button = document.createElement("button");
                         button.classList.add("option-btn");
                         button.textContent = option;
                         button.onclick = (e) =>
-                            checkAnswer(option, nextLetter, e);
+                            checkAnswer(option, correctLetter, e);
                         container.appendChild(button);
                     });
                 } else {
-                    let input = document.createElement("input");
+                    // Text input challenge:
+                    // The goal is to type the English name of the letter being displayed.
+                    const correctName = greekNames[currentLetter];
+                    const input = document.createElement("input");
                     input.id = "challenge-input";
                     input.type = "text";
-                    input.placeholder = "Type the name of the letter...";
+                    input.placeholder = "Type the name of this letter...";
                     input.onkeypress = (e) => {
                         if (e.key === "Enter") {
-                            checkAnswer(input.value.trim(), currentLetter);
+                            checkAnswer(
+                                input.value.trim().toLowerCase(),
+                                correctName,
+                            );
                         }
                     };
                     container.appendChild(input);
@@ -211,8 +279,8 @@
             }
 
             function getCookie(name) {
-                let nameEQ = name + "=";
-                let ca = document.cookie.split(";");
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(";");
                 for (let i = 0; i < ca.length; i++) {
                     let c = ca[i];
                     while (c.charAt(0) === " ") c = c.substring(1, c.length);
@@ -222,7 +290,6 @@
                 return null;
             }
 
-            // On game over, hide game UI and show the initial card with updated stats
             function gameOver() {
                 const endTime = Date.now();
                 const totalTimeSeconds = Math.floor(
@@ -241,32 +308,54 @@
                     setCookie("highScore", storedHighScore, 365);
                 }
 
-                // Remove the character box and challenge area
+                // Save final stats to localStorage so they persist across refreshes.
+                const finalStats = {
+                    highScore: storedHighScore,
+                    successRate: successRate,
+                    time: totalTimeSeconds,
+                };
+                localStorage.setItem("finalStats", JSON.stringify(finalStats));
+
+                // Hide game interface
                 document.getElementById("character-box").style.display = "none";
                 document.getElementById("challenge-area").style.display =
                     "none";
 
-                // Reset the card to look like the starting card but with updated stats
+                // Show the card with final stats
                 const card = document.getElementById("card");
                 card.style.display = "block";
                 card.style.opacity = "1";
                 card.innerHTML = `
-              <button class="button" id="beginButton" onclick="location.reload()" aria-label="Begin learning">Try Again</button>
-              <div class="labels">
-                <div class="label-value">
-                  <label>High Score</label>
-                  <span>${storedHighScore}</span>
-                </div>
-                <div class="label-value">
-                  <label>Success Rate</label>
-                  <span>${successRate}%</span>
-                </div>
-                <div class="label-value">
-                  <label>Time</label>
-                  <span>${totalTimeSeconds}s</span>
-                </div>
-              </div>
-            `;
+          <button class="button" id="beginButton" onclick="restartGame()" aria-label="Try Again">Try Again</button>
+          <div class="labels">
+            <div class="label-value">
+              <label>High Score</label>
+              <span>${storedHighScore}</span>
+            </div>
+            <div class="label-value">
+              <label>Success Rate</label>
+              <span>${successRate}%</span>
+            </div>
+            <div class="label-value">
+              <label>Time</label>
+              <span>${totalTimeSeconds}s</span>
+            </div>
+          </div>
+        `;
+            }
+
+            function restartGame() {
+                correctCount = 0;
+                wrongCount = 0;
+                startTime = Date.now();
+                document.getElementById("correctCount").textContent =
+                    correctCount;
+                document.getElementById("wrongCount").textContent = wrongCount;
+                document.getElementById("card").style.display = "none";
+                document.getElementById("character-box").style.display = "flex";
+                document.getElementById("challenge-area").style.display =
+                    "block";
+                generateChallenge();
             }
         </script>
     </body>
